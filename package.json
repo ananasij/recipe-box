@@ -1,7 +1,7 @@
 {
-  "name": "leaderboard",
+  "name": "recipebox",
   "version": "1.0.0",
-  "description": "Camper Leaderboard app for FreeCodeCamp",
+  "description": "Recipe Box app for FreeCodeCamp",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
