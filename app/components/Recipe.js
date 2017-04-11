@@ -1,27 +1,58 @@
 var React = require('react');
 
 var Recipe = React.createClass({
+    getInitialState: function() {
+        return { view: 'collapsed' };
+    },
+
+    switchRecipeView: function() {
+        if (this.state.view === 'collapsed') {
+            this.setState({ view: 'expanded' });
+        } else {
+            this.setState({ view: 'collapsed' });
+        }
+    },
+
     buildRecipe: function() {
         var recipe = this.props.source;
-        return (
-            <div className="container-fluid recipe">
-                <div className="row recipe-title">
-                    {recipe.name}
-                </div>
-                <div className="row recipe-ingredients-list">
-                    <ul>
-                        {buildIngredientsList(recipe.ingredients)}
-                    </ul>
-                </div>
-                <div className="row">
-                    {recipe.comments}
-                </div>
+        var recipeStructured;
+        var title = (
+            <div
+                className="row recipe-title"
+                onClick={this.switchRecipeView}>
+                {recipe.name}
+            </div>);
+        var ingredients = (
+            <div className="row recipe-ingredients-list">
+                <ul>
+                    {buildIngredientsList(recipe.ingredients)}
+                </ul>
             </div>
         );
+        var comments = recipe.comments ? (<div className="row">
+            {recipe.comments}
+        </div>) : '';
 
-        function buildIngredientsList(ingredients) {
+        if (this.state.view === 'collapsed') {
+            recipeStructured = (
+                <div className="container-fluid recipe">
+                    {title}
+                </div>
+            );
+        } else if (this.state.view === 'expanded') {
+            recipeStructured = (
+                <div className="container-fluid recipe">
+                    {title}
+                    {ingredients}
+                    {comments}
+                </div>
+            );
+        }
+        return recipeStructured;
+
+        function buildIngredientsList(ingredientsArray) {
             var ingredientsList = [];
-            ingredients.map(function(ingredient) {
+            ingredientsArray.map(function(ingredient) {
                 ingredientsList.push(
                     <li>- {ingredient}</li>
                 );

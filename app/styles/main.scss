@@ -5,6 +5,7 @@
         family: 'Amatic SC', cursive;
         size: 4rem;
     }
+    cursor: default;
 }
 
 .generic-text {
@@ -44,6 +45,10 @@
     .recipe-title {
         @extend .generic-title;
         color: darkred;
+        display: inline-block;
+        &:hover {
+            cursor: pointer;
+        }
     }
     .recipe-ingredients-list {
         ul {
