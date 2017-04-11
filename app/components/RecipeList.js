@@ -5,13 +5,21 @@ var RecipeList = React.createClass({
         var rawList = this.props.recipes;
         var listToRender = [];
         rawList.map(function(recipe) {
+            var ingredientsList = [];
+            recipe.ingredients.map(function(ingredient) {
+                ingredientsList.push(
+                    <li>- {ingredient}</li>
+                );
+            });
             listToRender.push(
-                <div className="container">
-                    <div className="row">
+                <div className="container-fluid recipe">
+                    <div className="row recipe-title">
                         {recipe.name}
                     </div>
-                    <div className="row">
-                        {recipe.ingredients.join(', ')}
+                    <div className="row recipe-ingredients-list">
+                        <ul>
+                            {ingredientsList}
+                        </ul>
                     </div>
                     <div className="row">
                         {recipe.comments}

@@ -19,6 +19,16 @@ var App = React.createClass({
                     name: 'Cheese sandwich',
                     ingredients: ['Bread', 'Cheese'],
                     comments: ''
+                },
+                {
+                    name: 'Tuna salad',
+                    ingredients: ['Tomatoes', 'Black olives', 'Canned tuna', 'Rocket salad'],
+                    comments: 'Cut, mix, add some olive oil.'
+                },
+                {
+                    name: 'Cheese sandwich',
+                    ingredients: ['Bread', 'Cheese'],
+                    comments: ''
                 }
             ]
         };
@@ -26,7 +36,7 @@ var App = React.createClass({
 
     render: function() {
         return (
-            <div className="container">
+            <div className="container recipe-box">
                 <h2>Recipe box</h2>
                 <RecipeList recipes={this.state.recipes}/>
             </div>

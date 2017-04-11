@@ -1,1 +1,59 @@
 @import "bootstrap-3.3.6/css/bootstrap.min.css";
+
+.generic-title {
+    font: {
+        family: 'Amatic SC', cursive;
+        size: 4rem;
+    }
+}
+
+.generic-text {
+    font: {
+        family: 'Loved by the King', cursive;
+        size: 3rem;
+    }
+}
+
+.lined-paper {
+    background: {
+        color: #fff;
+        size: 100% 1.2em;
+        image:
+                linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+                linear-gradient(#eee .1em, transparent .1em);
+    }
+}
+
+.recipe-box {
+    @extend .lined-paper;
+    margin: auto;
+    h2 {
+        @extend .generic-title;
+        text-align: center;
+        font-size: 6rem;
+    }
+}
+
+.recipe {
+    @extend .generic-text;
+    margin: 10px;
+    .row {
+        margin: 3px;
+        padding: 3px 50px;
+    }
+    .recipe-title {
+        @extend .generic-title;
+        color: darkred;
+    }
+    .recipe-ingredients-list {
+        ul {
+            list-style: {
+                type: none;
+                position: outside;
+            }
+            li {
+                margin-left: -0.5em;
+            }
+        }
+    }
+}
