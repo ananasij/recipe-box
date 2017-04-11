@@ -1,5 +1,5 @@
 var React = require('react');
-var RecipeList = require('./RecipeList');
+var Recipe = require('./Recipe');
 
 var App = React.createClass({
     getInitialState: function() {
@@ -35,10 +35,15 @@ var App = React.createClass({
     },
 
     render: function() {
+        var recipeList = [];
+        this.state.recipes.map(function(recipe) {
+            recipeList.push(<Recipe source={recipe}/>);
+            return true;
+        });
         return (
             <div className="container recipe-box">
                 <h2>Recipe box</h2>
-                <RecipeList recipes={this.state.recipes}/>
+                {recipeList}
             </div>
         );
     }
