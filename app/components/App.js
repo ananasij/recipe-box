@@ -7,27 +7,27 @@ var App = React.createClass({
             recipes: [
                 {
                     name: 'Greek salad',
-                    ingredients: ['Tomatoes', 'Cucumbers', 'Black Olives', 'Feta cheese'],
+                    ingredients: 'Tomatoes, Cucumbers, Black Olives, Feta cheese',
                     comments: 'Cut, mix, add some olive oil.'
                 },
                 {
                     name: 'Tuna salad',
-                    ingredients: ['Tomatoes', 'Black olives', 'Canned tuna', 'Rocket salad'],
+                    ingredients: 'Tomatoes, Black olives, Canned tuna, Rocket salad',
                     comments: 'Cut, mix, add some olive oil.'
                 },
                 {
                     name: 'Cheese sandwich',
-                    ingredients: ['Bread', 'Cheese'],
+                    ingredients: 'Bread, Cheese',
                     comments: ''
                 },
                 {
                     name: 'Tuna salad',
-                    ingredients: ['Tomatoes', 'Black olives', 'Canned tuna', 'Rocket salad'],
+                    ingredients: 'Tomatoes, Black olives, Canned tuna, Rocket salad',
                     comments: 'Cut, mix, add some olive oil.'
                 },
                 {
                     name: 'Cheese sandwich',
-                    ingredients: ['Bread', 'Cheese'],
+                    ingredients: 'Bread, Cheese',
                     comments: ''
                 }
             ]
