@@ -32,6 +32,7 @@ var Recipe = React.createClass({
 
     saveRecipe: function() {
         this.setState({ view: 'expanded' });
+        this.props.onSave(this.state.recipe);
         return true;
     },
 
