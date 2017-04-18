@@ -52,7 +52,13 @@ var App = React.createClass({
     },
 
     updateRecipe: function(updatedRecipe) {
-        this.setState(updatedRecipe);
+        var updatedRecipes = this.state.recipes;
+        updatedRecipes.map(function(recipe) {
+            if (recipe.key === updatedRecipe.key) {
+                return updatedRecipe;
+            }
+        });
+        this.setState({recipes: updatedRecipes});
     },
 
     deleteRecipe: function(recipeToDelete) {
