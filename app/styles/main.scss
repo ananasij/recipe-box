@@ -27,6 +27,7 @@
 
 .recipe-box {
     @extend .lined-paper;
+    height: 90vh;
     margin: auto;
     h2 {
         @extend .generic-title;
