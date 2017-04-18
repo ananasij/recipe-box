@@ -47,18 +47,30 @@ var App = React.createClass({
         }
     },
 
-    updateBox: function(updatedRecipe) {
-        this.setState(updatedRecipe);
+    componentDidUpdate: function() {
         localStorage.setItem('recipeBox', JSON.stringify(this.state.recipes));
+    },
+
+    updateRecipe: function(updatedRecipe) {
+        this.setState(updatedRecipe);
+    },
+
+    deleteRecipe: function(recipeToDelete) {
+        var recipes = this.state.recipes;
+        var i = recipes.indexOf(recipeToDelete);
+        recipes = recipes.slice(0,i).concat(recipes.slice(i + 1,recipes.length));
+        this.setState({ recipes: recipes });
     },
 
     render: function() {
         var recipeList = [];
-        var onSave = this.updateBox;
+        var onSave = this.updateRecipe;
+        var onDelete = this.deleteRecipe;
         this.state.recipes.map(function(recipe) {
             recipeList.push(
                 <Recipe source={recipe}
-                        onSave={onSave}/>
+                        onSave={onSave}
+                        onDelete={onDelete} />
             );
             return true;
         });

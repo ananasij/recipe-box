@@ -36,6 +36,11 @@ var Recipe = React.createClass({
         return true;
     },
 
+    deleteRecipe: function() {
+        this.props.onDelete(this.state.recipe);
+        return true;
+    },
+
     displayTitle: function() {
         var titleText = this.state.recipe.name;
         var titleBlock = (
@@ -53,6 +58,8 @@ var Recipe = React.createClass({
                     {titleBlock}
                     <i className="fa fa-pencil icon" aria-hidden="true" title="Edit"
                        onClick={this.editRecipe}> </i>
+                    <i className="fa fa-trash-o icon" aria-hidden="true" title="Delete this recipe"
+                       onClick={this.deleteRecipe}> </i>
                 </div>
             );
         } else if (this.state.view === 'edit') {
@@ -63,8 +70,10 @@ var Recipe = React.createClass({
                            value={titleText}
                            onChange={this.updateRecipe}
                     />
-                    <i className="fa fa-check icon" aria-hidden="true" title="Edit"
+                    <i className="fa fa-check icon" aria-hidden="true" title="Save changes"
                        onClick={this.saveRecipe}> </i>
+                    <i className="fa fa-trash-o icon" aria-hidden="true" title="Delete this recipe"
+                       onClick={this.deleteRecipe}> </i>
                 </div>
             );
         }
