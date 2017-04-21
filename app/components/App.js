@@ -9,31 +9,36 @@ var App = React.createClass({
                     key: '1',
                     name: 'Greek salad',
                     ingredients: 'Tomatoes, Cucumbers, Black Olives, Feta cheese',
-                    comments: 'Cut, mix, add some olive oil.'
+                    comments: 'Cut, mix, add some olive oil.',
+                    view: 'collapsed'
                 },
                 {
                     key: '2',
                     name: 'Tuna salad',
                     ingredients: 'Tomatoes, Black olives, Canned tuna, Rocket salad',
-                    comments: 'Cut, mix, add some olive oil.'
+                    comments: 'Cut, mix, add some olive oil.',
+                    view: 'collapsed'
                 },
                 {
                     key: '3',
                     name: 'Cheese sandwich',
                     ingredients: 'Bread, Cheese',
-                    comments: ''
+                    comments: '',
+                    view: 'collapsed'
                 },
                 {
                     key: '4',
                     name: 'Tuna salad',
                     ingredients: 'Tomatoes, Black olives, Canned tuna, Rocket salad',
-                    comments: 'Cut, mix, add some olive oil.'
+                    comments: 'Cut, mix, add some olive oil.',
+                    view: 'collapsed'
                 },
                 {
                     key: '5',
                     name: 'Cheese sandwich',
                     ingredients: 'Bread, Cheese',
-                    comments: ''
+                    comments: '',
+                    view: 'collapsed'
                 }
             ]
         };
@@ -63,9 +68,35 @@ var App = React.createClass({
 
     deleteRecipe: function(recipeToDelete) {
         var recipes = this.state.recipes;
-        var i = recipes.indexOf(recipeToDelete);
-        recipes = recipes.slice(0, i).concat(recipes.slice(i + 1, recipes.length));
+        this.state.recipes.forEach(function(recipe, i) {
+            if (recipe.key === recipeToDelete.key) {
+                recipes = recipes.slice(0, i).concat(recipes.slice(i + 1, recipes.length));
+            }
+        });
         this.setState({ recipes: recipes }, this.updateLocalStorage);
+    },
+
+    createRecipe: function() {
+        var newKey = getLastKey(this.state.recipes) + 1;
+        var updatedRecipes = [{
+            key: newKey,
+            name: 'New recipe scratch',
+            ingredients: '',
+            comments: '',
+            view: 'edit'
+        }].concat(this.state.recipes);
+        this.setState({ recipes: updatedRecipes }, function() {
+            console.log(this.state.recipes);
+        });
+
+        function getLastKey(recipes) {
+            var keys = [];
+            recipes.map(function(recipe) {
+                keys.push(recipe.key);
+                return true;
+            });
+            return Math.max.apply(Math, keys);
+        }
     },
 
     render: function() {
@@ -81,8 +112,25 @@ var App = React.createClass({
         });
         return (
             <div className="container recipe-box">
-                <h2>Recipe box</h2>
-                {recipeList}
+                <div className="row header">
+                    <div className="col-xs-12 col-sm-8">
+                        <h2>Recipe box</h2>
+                    </div>
+                    <div className="col-xs-12 col-sm-4 btn-container">
+                        <button className="btn new-recipe-btn"
+                                onClick={this.createRecipe}>
+                            Add new recipe
+                        </button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-xs-2"></div>
+                    <div className="col-xs-10">
+                        {recipeList}
+                    </div>
+                </div>
+
+
             </div>
         );
     }

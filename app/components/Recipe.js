@@ -8,16 +8,22 @@ var Recipe = React.createClass({
         };
     },
 
+    setRecipeView: function(view) {
+        var updatedRecipe = Object.assign({}, this.state.recipe);
+        updatedRecipe.view = view;
+        return updatedRecipe;
+    },
+
     switchRecipeView: function() {
-        if (this.state.view === 'collapsed') {
-            this.setState({ view: 'expanded' });
+        if (this.state.recipe.view === 'collapsed') {
+            this.setState({ recipe: this.setRecipeView('expanded') });
         } else {
-            this.setState({ view: 'collapsed' });
+            this.setState({ recipe: this.setRecipeView('collapsed') });
         }
     },
 
     editRecipe: function() {
-        this.setState({ view: 'edit' });
+        this.setState({ recipe: this.setRecipeView('edit') });
     },
 
     updateRecipe: function(e) {
@@ -28,8 +34,9 @@ var Recipe = React.createClass({
     },
 
     saveRecipe: function() {
-        this.setState({ view: 'expanded' });
-        this.props.onSave(this.state.recipe);
+        this.setState({ recipe: this.setRecipeView('expanded') }, function() {
+            this.props.onSave(this.state.recipe);
+        });
     },
 
     deleteRecipe: function() {
@@ -45,9 +52,9 @@ var Recipe = React.createClass({
             </div>
         );
         var titleView;
-        if (this.state.view === 'collapsed') {
+        if (this.state.recipe.view === 'collapsed') {
             titleView = titleBlock;
-        } else if (this.state.view === 'expanded') {
+        } else if (this.state.recipe.view === 'expanded') {
             titleView = (
                 <div>
                     {titleBlock}
@@ -57,7 +64,7 @@ var Recipe = React.createClass({
                        onClick={this.deleteRecipe}> </i>
                 </div>
             );
-        } else if (this.state.view === 'edit') {
+        } else if (this.state.recipe.view === 'edit') {
             titleView = (
                 <div>
                     <input type="text" className="form-control title-input"
@@ -80,13 +87,13 @@ var Recipe = React.createClass({
     displayIngredients: function() {
         var ingredientsText = this.state.recipe.ingredients;
         var ingredientsView = null;
-        if (this.state.view === 'expanded') {
+        if (this.state.recipe.view === 'expanded') {
             ingredientsView = (
                 <ul>
                     {buildIngredientsList(ingredientsText)}
                 </ul>
             );
-        } else if (this.state.view === 'edit') {
+        } else if (this.state.recipe.view === 'edit') {
             ingredientsView = (
                 <div>
                     <span className="help-block">Ingredients should be comma-separated.</span>
@@ -118,9 +125,9 @@ var Recipe = React.createClass({
     displayComments: function() {
         var commentsText = this.state.recipe.comments;
         var commentsView = null;
-        if (this.state.view === 'expanded' && commentsText) {
+        if (this.state.recipe.view === 'expanded' && commentsText) {
             commentsView = commentsText;
-        } else if (this.state.view === 'edit') {
+        } else if (this.state.recipe.view === 'edit') {
             commentsView = (
                 <textarea className="form-control" rows="2"
                           defaultValue={commentsText}

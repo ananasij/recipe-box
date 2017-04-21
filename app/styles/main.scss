@@ -79,6 +79,29 @@
 }
 
 .title-input {
-    max-width: 40%;
+    max-width: 70%;
     display: inline-block;
+}
+
+.new-recipe-btn {
+    @extend .generic-text;
+    font-size: 2.5rem;
+    display: inline-block;
+    margin: 3rem;
+    background-color: #abced4;
+    &:hover,
+    &:active,
+    &:focus {
+        color: darkred;
+        outline: none;
+    }
+}
+
+.btn-container {
+    height: 8rem;
+    text-align: center;
+}
+
+.header {
+    height: 9rem;
 }
