@@ -52,11 +52,11 @@ var App = React.createClass({
     },
 
     updateRecipe: function(updatedRecipe) {
-        var updatedRecipes = this.state.recipes;
-        updatedRecipes.map(function(recipe) {
+        var updatedRecipes = this.state.recipes.map(function(recipe) {
             if (recipe.key === updatedRecipe.key) {
                 return updatedRecipe;
             }
+            return Object.assign({}, recipe);
         });
         this.setState({ recipes: updatedRecipes });
     },

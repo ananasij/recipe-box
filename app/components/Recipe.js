@@ -22,9 +22,8 @@ var Recipe = React.createClass({
 
     updateRecipe: function(e) {
         var name = e.target.getAttribute('data-field');
-        var value = e.target.value;
-        var recipeNew = this.state.recipe;
-        recipeNew[name] = value;
+        var recipeNew = Object.assign({}, this.state.recipe);
+        recipeNew[name] = e.target.value;
         this.setState({ recipe: recipeNew });
     },
 
