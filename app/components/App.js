@@ -41,9 +41,9 @@ var App = React.createClass({
 
     componentWillMount: function() {
         if (localStorage.recipeBox) {
-            this.setState( {recipes: JSON.parse(localStorage.recipeBox)})
+            this.setState({ recipes: JSON.parse(localStorage.recipeBox) });
         } else {
-            localStorage.setItem('recipeBox', this.state.recipes);
+            localStorage.setItem('recipeBox', JSON.stringify(this.state.recipes));
         }
     },
 
@@ -58,27 +58,26 @@ var App = React.createClass({
                 return updatedRecipe;
             }
         });
-        this.setState({recipes: updatedRecipes});
+        this.setState({ recipes: updatedRecipes });
     },
 
     deleteRecipe: function(recipeToDelete) {
         var recipes = this.state.recipes;
         var i = recipes.indexOf(recipeToDelete);
-        recipes = recipes.slice(0,i).concat(recipes.slice(i + 1,recipes.length));
+        recipes = recipes.slice(0, i).concat(recipes.slice(i + 1, recipes.length));
         this.setState({ recipes: recipes });
     },
 
     render: function() {
-        var recipeList = [];
         var onSave = this.updateRecipe;
         var onDelete = this.deleteRecipe;
-        this.state.recipes.map(function(recipe) {
-            recipeList.push(
-                <Recipe source={recipe}
+        var recipeList = this.state.recipes.map(function(recipe) {
+            return (
+                <Recipe key = {recipe.key}
+                        source={recipe}
                         onSave={onSave}
                         onDelete={onDelete} />
             );
-            return true;
         });
         return (
             <div className="container recipe-box">

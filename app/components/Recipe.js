@@ -18,7 +18,6 @@ var Recipe = React.createClass({
 
     editRecipe: function() {
         this.setState({ view: 'edit' });
-        return true;
     },
 
     updateRecipe: function(e) {
@@ -27,18 +26,15 @@ var Recipe = React.createClass({
         var recipeNew = this.state.recipe;
         recipeNew[name] = value;
         this.setState({ recipe: recipeNew });
-        return true;
     },
 
     saveRecipe: function() {
         this.setState({ view: 'expanded' });
         this.props.onSave(this.state.recipe);
-        return true;
     },
 
     deleteRecipe: function() {
         this.props.onDelete(this.state.recipe);
-        return true;
     },
 
     displayTitle: function() {
@@ -112,15 +108,11 @@ var Recipe = React.createClass({
         return '';
 
         function buildIngredientsList(ingredients) {
-            var ingredientsArray = ingredients.split(',');
-            var ingredientsList = [];
-            ingredientsArray.map(function(ingredient) {
-                ingredientsList.push(
-                    <li>- {ingredient}</li>
+            return ingredients.split(',').map(function(ingredient, index) {
+                return (
+                    <li key={index}>- {ingredient}</li>
                 );
-                return true;
             });
-            return ingredientsList;
         }
     },
 
