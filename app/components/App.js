@@ -43,11 +43,11 @@ var App = React.createClass({
         if (localStorage.recipeBox) {
             this.setState({ recipes: JSON.parse(localStorage.recipeBox) });
         } else {
-            localStorage.setItem('recipeBox', JSON.stringify(this.state.recipes));
+            this.updateLocalStorage();
         }
     },
 
-    componentDidUpdate: function() {
+    updateLocalStorage: function() {
         localStorage.setItem('recipeBox', JSON.stringify(this.state.recipes));
     },
 
@@ -58,14 +58,14 @@ var App = React.createClass({
             }
             return Object.assign({}, recipe);
         });
-        this.setState({ recipes: updatedRecipes });
+        this.setState({ recipes: updatedRecipes }, this.updateLocalStorage);
     },
 
     deleteRecipe: function(recipeToDelete) {
         var recipes = this.state.recipes;
         var i = recipes.indexOf(recipeToDelete);
         recipes = recipes.slice(0, i).concat(recipes.slice(i + 1, recipes.length));
-        this.setState({ recipes: recipes });
+        this.setState({ recipes: recipes }, this.updateLocalStorage);
     },
 
     render: function() {
