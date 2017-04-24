@@ -53,7 +53,7 @@ var App = React.createClass({
     },
 
     updateLocalStorage: function() {
-        localStorage.setItem('recipeBox', JSON.stringify(this.state.recipes));
+        localStorage.setItem('recipeBox', JSON.stringify(this.collapseAllRecipes(this.state.recipes)));
     },
 
     updateRecipe: function(updatedRecipe) {
@@ -85,9 +85,7 @@ var App = React.createClass({
             comments: '',
             view: 'edit'
         }].concat(this.state.recipes);
-        this.setState({ recipes: updatedRecipes }, function() {
-            console.log(this.state.recipes);
-        });
+        this.setState({ recipes: updatedRecipes });
 
         function getLastKey(recipes) {
             var keys = [];
@@ -99,10 +97,27 @@ var App = React.createClass({
         }
     },
 
+    collapseAllRecipes: function() {
+        return this.state.recipes.map(function(recipe) {
+            return Object.assign({}, recipe, { view: 'collapsed' });
+        });
+    },
+
+    updateIndexView: function(expandedRecipe) {
+        var indexView = this.collapseAllRecipes(this.state.recipes).map(function(recipe) {
+            if (recipe.key === expandedRecipe.key) {
+                return expandedRecipe;
+            }
+            return recipe;
+        });
+        this.setState({ recipes: indexView });
+    },
+
     render: function() {
         return (
             <RecipeBoxView
                 recipes={this.state.recipes}
+                onViewSwitch={this.updateIndexView}
                 onSave={this.updateRecipe}
                 onDelete={this.deleteRecipe}
                 onCreateRecipe={this.createRecipe} />

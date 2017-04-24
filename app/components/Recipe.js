@@ -7,6 +7,12 @@ var Recipe = React.createClass({
         return { recipe: this.props.source };
     },
 
+    componentWillReceiveProps: function(nextProps) {
+        if (this.state.recipe !== nextProps.source) {
+            this.setState({ recipe: nextProps.source });
+        }
+    },
+
     setRecipeView: function(view) {
         var updatedRecipe = Object.assign({}, this.state.recipe);
         updatedRecipe.view = view;
@@ -15,7 +21,9 @@ var Recipe = React.createClass({
 
     switchRecipeView: function() {
         if (this.state.recipe.view === 'collapsed') {
-            this.setState({ recipe: this.setRecipeView('expanded') });
+            this.setState({ recipe: this.setRecipeView('expanded') }, function() {
+                this.props.onViewSwitch(this.state.recipe);
+            });
         } else {
             this.setState({ recipe: this.setRecipeView('collapsed') });
         }

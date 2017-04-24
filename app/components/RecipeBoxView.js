@@ -3,12 +3,14 @@ var Recipe = require('./Recipe');
 
 var RecipeBoxView = React.createClass({
     render: function() {
+        var onViewSwitch = this.props.onViewSwitch;
         var onSave = this.props.onSave;
         var onDelete = this.props.onDelete;
         var recipeList = this.props.recipes.map(function(recipe) {
             return (
-                <Recipe key = {recipe.key}
+                <Recipe key={recipe.key}
                         source={recipe}
+                        onViewSwitch={onViewSwitch}
                         onSave={onSave}
                         onDelete={onDelete} />
             );
