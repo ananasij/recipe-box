@@ -3,103 +3,57 @@ var React = require('react');
 var RecipeView = React.createClass({
 
     displayTitle: function() {
-        var titleText = this.props.source.name;
-        var titleBlock = (
-            <div className="recipe-title"
-                 onClick={this.props.onViewSwitch}>
-                {titleText}
-            </div>
-        );
-        var titleView;
-        if (this.props.source.view === 'collapsed') {
-            titleView = titleBlock;
-        } else if (this.props.source.view === 'expanded') {
-            titleView = (
-                <div>
-                    {titleBlock}
-                    <i className="fa fa-pencil icon" aria-hidden="true" title="Edit"
+        var icons = '';
+        if (this.props.source.view === 'expanded') {
+            icons = (
+                <div className="recipe-icons">
+                    <i className="fa fa-pencil icon"
+                       aria-hidden="true"
+                       title="Edit"
                        onClick={this.props.onEdit}> </i>
-                    <i className="fa fa-trash-o icon" aria-hidden="true" title="Delete this recipe"
-                       onClick={this.props.onDelete}> </i>
-                </div>
-            );
-        } else if (this.props.source.view === 'edit') {
-            titleView = (
-                <div>
-                    <input type="text" className="form-control title-input"
-                           data-field="name"
-                           value={titleText}
-                           onChange={this.props.onUpdate}
-                        />
-                    <i className="fa fa-check icon" aria-hidden="true" title="Save changes"
-                       onClick={this.props.onSave}> </i>
-                    <i className="fa fa-trash-o icon" aria-hidden="true" title="Delete this recipe"
+                    <i className="fa fa-trash-o icon"
+                       aria-hidden="true"
+                       title="Delete this recipe"
                        onClick={this.props.onDelete}> </i>
                 </div>
             );
         }
-        return (<div className="row">
-            {titleView}
-        </div>);
+        return (
+            <div className="row">
+                <div className="recipe-title"
+                     onClick={this.props.onViewSwitch}>
+                    {this.props.source.name}
+                </div>
+            {icons}
+            </div>
+        );
     },
 
     displayIngredients: function() {
-        var ingredientsText = this.props.source.ingredients;
-        var ingredientsView = null;
         if (this.props.source.view === 'expanded') {
-            ingredientsView = (
-                <ul>
-                    {buildIngredientsList(ingredientsText)}
-                </ul>
-            );
-        } else if (this.props.source.view === 'edit') {
-            ingredientsView = (
-                <div>
-                    <span className="help-block">Ingredients should be comma-separated.</span>
-                    <textarea className="form-control" rows="2"
-                              value={ingredientsText}
-                              data-field="ingredients"
-                              onChange={this.props.onUpdate}>
-                        </textarea>
+            var ingredients = this.props.source.ingredients
+                .split(',')
+                .map(function(ingredient, index) {
+                    return (
+                        <li key={index}>- {ingredient}</li>
+                    );
+                });
+            return (
+                <div className="row recipe-ingredients-list">
+                    <ul> {ingredients} </ul>
                 </div>
             );
         }
-
-        if (ingredientsView) {
-            return (<div className="row recipe-ingredients-list">
-                {ingredientsView}
-            </div>);
-        }
         return '';
-
-        function buildIngredientsList(ingredients) {
-            return ingredients.split(',').map(function(ingredient, index) {
-                return (
-                    <li key={index}>- {ingredient}</li>
-                );
-            });
-        }
     },
 
     displayComments: function() {
-        var commentsText = this.props.source.comments;
-        var commentsView = null;
-        if (this.props.source.view === 'expanded' && commentsText) {
-            commentsView = commentsText;
-        } else if (this.props.source.view === 'edit') {
-            commentsView = (
-                <textarea className="form-control" rows="2"
-                          defaultValue={commentsText}
-                          data-field="comments"
-                          onChange={this.props.onUpdate}>
-                </textarea>
+        if (this.props.source.view === 'expanded' && this.props.source.comments) {
+            return (
+                <div className="row">
+                    {this.props.source.comments}
+                </div>
             );
-        }
-
-        if (commentsView) {
-            return (<div className="row">
-                {commentsView}
-            </div>);
         }
         return '';
     },

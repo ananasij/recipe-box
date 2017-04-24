@@ -1,5 +1,6 @@
 var React = require('react');
 var RecipeView = require('./RecipeView');
+var RecipeEdit = require('./RecipeEdit');
 
 var Recipe = React.createClass({
     getInitialState: function() {
@@ -42,13 +43,20 @@ var Recipe = React.createClass({
     },
 
     render: function() {
+        if (this.state.recipe.view === 'edit') {
+            return (
+                <RecipeEdit
+                    source={this.state.recipe}
+                    onUpdate={this.updateRecipe}
+                    onSave={this.saveRecipe}
+                    onDelete={this.deleteRecipe} />
+            );
+        }
         return (
             <RecipeView
                 source={this.state.recipe}
                 onViewSwitch={this.switchRecipeView}
                 onEdit={this.editRecipe}
-                onUpdate={this.updateRecipe}
-                onSave={this.saveRecipe}
                 onDelete={this.deleteRecipe} />
         );
     }

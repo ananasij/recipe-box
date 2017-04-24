@@ -63,8 +63,10 @@
             }
         }
     }
+    .recipe-icons {
+        display: inline-block;
+    }
     .icon {
-        size: 4rem;
         margin: auto 15px;
         &:hover {
             cursor: pointer;
