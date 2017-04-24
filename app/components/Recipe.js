@@ -21,15 +21,14 @@ var Recipe = React.createClass({
 
     switchRecipeView: function() {
         if (this.state.recipe.view === 'collapsed') {
-            this.setState({ recipe: this.setRecipeView('expanded') }, function() {
-                this.props.onViewSwitch(this.state.recipe);
-            });
+            this.props.onViewSwitch(this.state.recipe.key);
         } else {
             this.setState({ recipe: this.setRecipeView('collapsed') });
         }
     },
 
     editRecipe: function() {
+        this.props.onEditStart();
         this.setState({ recipe: this.setRecipeView('edit') });
     },
 

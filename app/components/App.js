@@ -4,6 +4,7 @@ var RecipeBoxView = require('./RecipeBoxView');
 var App = React.createClass({
     getInitialState: function() {
         return {
+            editMode: false,
             recipes: [
                 {
                     key: '1',
@@ -63,7 +64,7 @@ var App = React.createClass({
             }
             return Object.assign({}, recipe);
         });
-        this.setState({ recipes: updatedRecipes }, this.updateLocalStorage);
+        this.setState({ recipes: updatedRecipes, editMode: false }, this.updateLocalStorage);
     },
 
     deleteRecipe: function(recipeToDelete) {
@@ -73,7 +74,7 @@ var App = React.createClass({
                 recipes = recipes.slice(0, i).concat(recipes.slice(i + 1, recipes.length));
             }
         });
-        this.setState({ recipes: recipes }, this.updateLocalStorage);
+        this.setState({ recipes: recipes, editMode: false }, this.updateLocalStorage);
     },
 
     createRecipe: function() {
@@ -84,8 +85,8 @@ var App = React.createClass({
             ingredients: '',
             comments: '',
             view: 'edit'
-        }].concat(this.state.recipes);
-        this.setState({ recipes: updatedRecipes });
+        }].concat(this.collapseAllRecipes(this.state.recipes));
+        this.setState({ recipes: updatedRecipes, editMode: true });
 
         function getLastKey(recipes) {
             var keys = [];
@@ -103,21 +104,29 @@ var App = React.createClass({
         });
     },
 
-    updateIndexView: function(expandedRecipe) {
-        var indexView = this.collapseAllRecipes(this.state.recipes).map(function(recipe) {
-            if (recipe.key === expandedRecipe.key) {
-                return expandedRecipe;
-            }
-            return recipe;
-        });
-        this.setState({ recipes: indexView });
+    updateIndexView: function(expandedRecipeKey) {
+        if (!this.state.editMode) {
+            var indexView = this.collapseAllRecipes(this.state.recipes).map(function(recipe) {
+                if (recipe.key === expandedRecipeKey) {
+                    return Object.assign({}, recipe, { view: 'expanded' });
+                }
+                return recipe;
+            });
+            this.setState({ recipes: indexView });
+        }
+    },
+
+    startEditMode: function() {
+        this.setState({ editMode: true });
     },
 
     render: function() {
         return (
             <RecipeBoxView
+                editMode={this.state.editMode}
                 recipes={this.state.recipes}
                 onViewSwitch={this.updateIndexView}
+                onEditStart={this.startEditMode}
                 onSave={this.updateRecipe}
                 onDelete={this.deleteRecipe}
                 onCreateRecipe={this.createRecipe} />
