@@ -19,24 +19,6 @@ var RecipeBoxView = React.createClass({
         });
     },
 
-    getNewRecipeButton: function() {
-        if (this.props.editMode) {
-            return (
-                <button className="btn new-recipe-btn"
-                        onClick={this.props.onCreateRecipe}
-                        disabled="disabled">
-                    Add new recipe
-                </button>
-            );
-        }
-        return (
-            <button className="btn new-recipe-btn"
-                    onClick={this.props.onCreateRecipe}>
-                Add new recipe
-            </button>
-        );
-    },
-
     render: function() {
         return (
             <div className="container recipe-box">
@@ -45,7 +27,11 @@ var RecipeBoxView = React.createClass({
                         <h2>Recipe box</h2>
                     </div>
                     <div className="col-xs-12 col-sm-4 btn-container">
-                        {this.getNewRecipeButton()}
+                        <button className="btn new-recipe-btn"
+                                onClick={this.props.onCreateRecipe}
+                                disabled={this.props.isEditMode}>
+                            Add new recipe
+                        </button>
                     </div>
                 </div>
                 <div className="row">

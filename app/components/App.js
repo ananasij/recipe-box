@@ -4,7 +4,7 @@ var RecipeBoxView = require('./RecipeBoxView');
 var App = React.createClass({
     getInitialState: function() {
         return {
-            editMode: false,
+            isEditMode: false,
             recipes: [
                 {
                     key: '1',
@@ -64,7 +64,7 @@ var App = React.createClass({
             }
             return Object.assign({}, recipe);
         });
-        this.setState({ recipes: updatedRecipes, editMode: false }, this.updateLocalStorage);
+        this.setState({ recipes: updatedRecipes, isEditMode: false }, this.updateLocalStorage);
     },
 
     deleteRecipe: function(recipeToDelete) {
@@ -74,7 +74,7 @@ var App = React.createClass({
                 recipes = recipes.slice(0, i).concat(recipes.slice(i + 1, recipes.length));
             }
         });
-        this.setState({ recipes: recipes, editMode: false }, this.updateLocalStorage);
+        this.setState({ recipes: recipes, isEditMode: false }, this.updateLocalStorage);
     },
 
     createRecipe: function() {
@@ -86,7 +86,7 @@ var App = React.createClass({
             comments: '',
             view: 'edit'
         }].concat(this.collapseAllRecipes(this.state.recipes));
-        this.setState({ recipes: updatedRecipes, editMode: true });
+        this.setState({ recipes: updatedRecipes, isEditMode: true });
 
         function getLastKey(recipes) {
             var keys = [];
@@ -105,7 +105,7 @@ var App = React.createClass({
     },
 
     updateIndexView: function(expandedRecipeKey) {
-        if (!this.state.editMode) {
+        if (!this.state.isEditMode) {
             var indexView = this.collapseAllRecipes(this.state.recipes).map(function(recipe) {
                 if (recipe.key === expandedRecipeKey) {
                     return Object.assign({}, recipe, { view: 'expanded' });
@@ -117,13 +117,13 @@ var App = React.createClass({
     },
 
     startEditMode: function() {
-        this.setState({ editMode: true });
+        this.setState({ isEditMode: true });
     },
 
     render: function() {
         return (
             <RecipeBoxView
-                editMode={this.state.editMode}
+                isEditMode={this.state.isEditMode}
                 recipes={this.state.recipes}
                 onViewSwitch={this.updateIndexView}
                 onEditStart={this.startEditMode}
