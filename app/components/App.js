@@ -10,36 +10,31 @@ var App = React.createClass({
                     key: '1',
                     name: 'Greek salad',
                     ingredients: 'Tomatoes, Cucumbers, Black Olives, Feta cheese',
-                    comments: 'Cut, mix, add some olive oil.',
-                    view: 'collapsed'
+                    comments: 'Cut, mix, add some olive oil.'
                 },
                 {
                     key: '2',
                     name: 'Tuna salad',
                     ingredients: 'Tomatoes, Black olives, Canned tuna, Rocket salad',
-                    comments: 'Cut, mix, add some olive oil.',
-                    view: 'collapsed'
+                    comments: 'Cut, mix, add some olive oil.'
                 },
                 {
                     key: '3',
                     name: 'Cheese sandwich',
                     ingredients: 'Bread, Cheese',
-                    comments: '',
-                    view: 'collapsed'
+                    comments: ''
                 },
                 {
                     key: '4',
                     name: 'Tuna salad',
                     ingredients: 'Tomatoes, Black olives, Canned tuna, Rocket salad',
-                    comments: 'Cut, mix, add some olive oil.',
-                    view: 'collapsed'
+                    comments: 'Cut, mix, add some olive oil.'
                 },
                 {
                     key: '5',
                     name: 'Cheese sandwich',
                     ingredients: 'Bread, Cheese',
-                    comments: '',
-                    view: 'collapsed'
+                    comments: ''
                 }
             ]
         };
@@ -47,14 +42,22 @@ var App = React.createClass({
 
     componentWillMount: function() {
         if (localStorage.recipeBox) {
-            this.setState({ recipes: JSON.parse(localStorage.recipeBox) });
+            this.setState({ recipes: this.collapseAllRecipes(JSON.parse(localStorage.recipeBox)) });
         } else {
             this.updateLocalStorage();
         }
     },
 
     updateLocalStorage: function() {
-        localStorage.setItem('recipeBox', JSON.stringify(this.collapseAllRecipes(this.state.recipes)));
+        var recipesToSave = this.state.recipes.map(function(recipe) {
+            return {
+                key: recipe.key,
+                name: recipe.name,
+                ingredients: recipe.ingredients,
+                comments: recipe.comments
+            };
+        });
+        localStorage.setItem('recipeBox', JSON.stringify(recipesToSave));
     },
 
     updateRecipe: function(updatedRecipe) {
