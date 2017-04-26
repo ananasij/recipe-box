@@ -22,7 +22,8 @@
   margin: auto; }
   .recipe-box h2 {
     text-align: center;
-    font-size: 6rem; }
+    font-size: 6rem;
+    text-transform: uppercase; }
 
 .recipe {
   margin: 10px; }
